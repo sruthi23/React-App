@@ -6,7 +6,7 @@ export const addQuestion = (question, answer) => ({
     answer
 })
 
-export const addAnswer = text => ({
+export const edit = text => ({
     type: 'ADD_ANSWER',
     text
 })

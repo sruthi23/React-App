@@ -11,14 +11,20 @@ class QuestForm extends Component {
         reset()
     }
     renderField = ({ input, label, type, meta: { touched, error } }) => (
-        <div className="six wide field">
+        <div className="field">
+            <label>{label}</label>
             <div className="field">
-                <label>{label}</label>
-                <div className="field">
-                    <input {...input} placeholder={label} type={type} />
-                    {touched && error && <span>{error}</span>}
-                </div>
+                <input {...input} placeholder={label} type={type} />
+                {touched && error && <span>{error}</span>}
             </div>
+        </div>
+    )
+
+    renderOption = ({ input, label, type, meta: { touched, error } }) => (
+        <div class="field">
+            <label>{label}</label>
+            <input {...input} placeholder={label} type={type} />
+            {touched && error && <span>{error}</span>}
         </div>
     )
 
@@ -40,7 +46,7 @@ class QuestForm extends Component {
             <>
                 <div className="ui container">
                     <form
-                        className="ui form"
+                        className="ui equal width form"
                         onSubmit={handleSubmit(this.submit)}>
                         <Field
                             name="question"
@@ -49,7 +55,36 @@ class QuestForm extends Component {
                             placeholder="Question"
                             label="Question"
                         />
-
+                        <div class="inline fields">
+                            <Field
+                                name="option1"
+                                component={this.renderOption}
+                                type="text"
+                                placeholder="option1"
+                                label="Option1"
+                            />
+                            <Field
+                                name="option2"
+                                component={this.renderOption}
+                                type="text"
+                                placeholder="option2"
+                                label="Option2"
+                            />
+                            <Field
+                                name="option3"
+                                component={this.renderOption}
+                                type="text"
+                                placeholder="option3"
+                                label="Option3"
+                            />
+                            <Field
+                                name="option4"
+                                component={this.renderOption}
+                                type="text"
+                                placeholder="option4"
+                                label="Option4"
+                            />
+                        </div>
                         <Field
                             name="answer"
                             component={this.renderField}
