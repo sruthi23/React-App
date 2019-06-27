@@ -54,9 +54,9 @@ class QuestForm extends Component {
             exam
         } = this.props
         const maxqst = answer.length === 10 ? true : false
-
+        console.log(exam)
         const res = answer.map((item, index) => (
-            <div className="item">
+            <div className="item" key={index}>
                 <i className="help icon" />
                 <div className="content">
                     <div className="header">{item.question}</div>
@@ -68,11 +68,12 @@ class QuestForm extends Component {
                                 <button
                                     className={
                                         exam[index] &&
-                                        exam[index].option ===
-                                            exam[index].answer &&
                                         exam[index].option === item.option1
                                             ? 'ui button primary'
-                                            : 'ui button '
+                                            : exam[index] &&
+                                              item.answer === item.option1
+                                            ? 'ui button green'
+                                            : 'ui button'
                                     }
                                     name={item.option1}
                                     onClick={() =>
@@ -94,11 +95,12 @@ class QuestForm extends Component {
                                 <button
                                     className={
                                         exam[index] &&
-                                        exam[index].option ===
-                                            exam[index].answer &&
                                         exam[index].option === item.option2
                                             ? 'ui button primary'
-                                            : 'ui button '
+                                            : exam[index] &&
+                                              item.answer === item.option2
+                                            ? 'ui button green'
+                                            : 'ui button'
                                     }
                                     name={item.option2}
                                     onClick={() =>
@@ -119,11 +121,12 @@ class QuestForm extends Component {
                                 <button
                                     className={
                                         exam[index] &&
-                                        exam[index].option ===
-                                            exam[index].answer &&
                                         exam[index].option === item.option3
                                             ? 'ui button primary'
-                                            : 'ui button '
+                                            : exam[index] &&
+                                              item.answer === item.option3
+                                            ? 'ui button green'
+                                            : 'ui button'
                                     }
                                     name={item.option3}
                                     onClick={() =>
@@ -144,11 +147,12 @@ class QuestForm extends Component {
                                 <button
                                     className={
                                         exam[index] &&
-                                        exam[index].option ===
-                                            exam[index].answer &&
                                         exam[index].option === item.option4
-                                            ? 'primary'
-                                            : 'ui button '
+                                            ? 'ui button primary'
+                                            : exam[index] &&
+                                              item.answer === item.option4
+                                            ? 'ui button green'
+                                            : 'ui button'
                                     }
                                     name={item.option4}
                                     onClick={() =>
