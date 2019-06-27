@@ -6,12 +6,6 @@ import { addQuestion, addExam } from '../actions'
 class QuestForm extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            option1: 'ui button',
-            option2: 'ui button',
-            option3: 'ui button',
-            option4: 'ui button'
-        }
     }
 
     submit = result => {
@@ -59,15 +53,7 @@ class QuestForm extends Component {
             answer,
             exam
         } = this.props
-        console.log('***', exam)
-        const options = answer.map((item, index) =>
-            // <div
-            //     className="ui link blue label"
-            //     onClick={() => }>
-            //     {item.option}
-            // </div>
-            console.log('item', item)
-        )
+        const maxqst = answer.length === 10 ? true : false
 
         const res = answer.map((item, index) => (
             <div className="item">
@@ -238,7 +224,7 @@ class QuestForm extends Component {
                                     name="submit"
                                     type="submit"
                                     className="ui button"
-                                    disabled={pristine || submitting}>
+                                    disabled={pristine || submitting || maxqst}>
                                     Submit
                                 </button>
                                 <button
