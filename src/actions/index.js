@@ -1,12 +1,25 @@
 export const ADD_QSTN = 'ADD_QSTN'
-export const ADD_ANSWER = 'ADD_ANSWER'
-export const addQuestion = (question, answer) => ({
+export const ADD_EXAM = 'ADD_EXAM'
+export const addQuestion = (
+    question,
+    answer,
+    option1,
+    option2,
+    option3,
+    option4
+) => ({
     type: 'ADD_QSTN',
     question,
+    option1,
+    option2,
+    option3,
+    option4,
     answer
 })
 
-export const edit = text => ({
-    type: 'ADD_ANSWER',
-    text
+export const addExam = (index, option, answer) => ({
+    type: 'ADD_EXAM',
+    index,
+    option,
+    answer
 })

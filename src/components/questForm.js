@@ -1,15 +1,37 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
-import { addQuestion } from '../actions'
+import { addQuestion, addExam } from '../actions'
 
 class QuestForm extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            option1: 'ui button',
+            option2: 'ui button',
+            option3: 'ui button',
+            option4: 'ui button'
+        }
+    }
+
     submit = result => {
         const { addQuestion, reset } = this.props
         console.log('result', result)
-        addQuestion(result.question, result.answer)
+        addQuestion(
+            result.question,
+            result.answer,
+            result.option1,
+            result.option2,
+            result.option3,
+            result.option4
+        )
         reset()
     }
+    submitAnswer = (option, index, answer) => {
+        const { addExam } = this.props
+        addExam(index, option, answer)
+    }
+
     renderField = ({ input, label, type, meta: { touched, error } }) => (
         <div className="field">
             <label>{label}</label>
@@ -21,7 +43,7 @@ class QuestForm extends Component {
     )
 
     renderOption = ({ input, label, type, meta: { touched, error } }) => (
-        <div class="field">
+        <div className="field">
             <label>{label}</label>
             <input {...input} placeholder={label} type={type} />
             {touched && error && <span>{error}</span>}
@@ -29,100 +51,229 @@ class QuestForm extends Component {
     )
 
     render() {
-        const { handleSubmit, pristine, reset, submitting, answer } = this.props
-        console.log('***', answer)
+        const {
+            handleSubmit,
+            pristine,
+            reset,
+            submitting,
+            answer,
+            exam
+        } = this.props
+        console.log('***', exam)
+        const options = answer.map((item, index) =>
+            // <div
+            //     className="ui link blue label"
+            //     onClick={() => }>
+            //     {item.option}
+            // </div>
+            console.log('item', item)
+        )
 
-        const res = answer.map(item => (
+        const res = answer.map((item, index) => (
             <div className="item">
                 <i className="help icon" />
                 <div className="content">
                     <div className="header">{item.question}</div>
-                    <div className="description">{item.answer}</div>
+                </div>
+                <div className="ui horizontal list">
+                    <div className="item">
+                        <div className="content">
+                            <div className="description">
+                                <button
+                                    className={
+                                        exam[index] &&
+                                        exam[index].option ===
+                                            exam[index].answer &&
+                                        exam[index].option === item.option1
+                                            ? 'ui button primary'
+                                            : 'ui button '
+                                    }
+                                    name={item.option1}
+                                    onClick={() =>
+                                        this.submitAnswer(
+                                            item.option1,
+                                            index,
+                                            item.answer
+                                        )
+                                    }>
+                                    {item.option1}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="item">
+                        <div className="content">
+                            <div className="description">
+                                <button
+                                    className={
+                                        exam[index] &&
+                                        exam[index].option ===
+                                            exam[index].answer &&
+                                        exam[index].option === item.option2
+                                            ? 'ui button primary'
+                                            : 'ui button '
+                                    }
+                                    name={item.option2}
+                                    onClick={() =>
+                                        this.submitAnswer(
+                                            item.option2,
+                                            index,
+                                            item.answer
+                                        )
+                                    }>
+                                    {item.option2}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="item">
+                        <div className="content">
+                            <div className="description">
+                                <button
+                                    className={
+                                        exam[index] &&
+                                        exam[index].option ===
+                                            exam[index].answer &&
+                                        exam[index].option === item.option3
+                                            ? 'ui button primary'
+                                            : 'ui button '
+                                    }
+                                    name={item.option3}
+                                    onClick={() =>
+                                        this.submitAnswer(
+                                            item.option3,
+                                            index,
+                                            item.answer
+                                        )
+                                    }>
+                                    {item.option3}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="item">
+                        <div className="content">
+                            <div className="description">
+                                <button
+                                    className={
+                                        exam[index] &&
+                                        exam[index].option ===
+                                            exam[index].answer &&
+                                        exam[index].option === item.option4
+                                            ? 'primary'
+                                            : 'ui button '
+                                    }
+                                    name={item.option4}
+                                    onClick={() =>
+                                        this.submitAnswer(
+                                            item.option4,
+                                            index,
+                                            item.answer
+                                        )
+                                    }>
+                                    {item.option4}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         ))
 
         return (
             <>
-                <div className="ui container">
-                    <form
-                        className="ui equal width form"
-                        onSubmit={handleSubmit(this.submit)}>
-                        <Field
-                            name="question"
-                            component={this.renderField}
-                            type="text"
-                            placeholder="Question"
-                            label="Question"
-                        />
-                        <div class="inline fields">
-                            <Field
-                                name="option1"
-                                component={this.renderOption}
-                                type="text"
-                                placeholder="option1"
-                                label="Option1"
-                            />
-                            <Field
-                                name="option2"
-                                component={this.renderOption}
-                                type="text"
-                                placeholder="option2"
-                                label="Option2"
-                            />
-                            <Field
-                                name="option3"
-                                component={this.renderOption}
-                                type="text"
-                                placeholder="option3"
-                                label="Option3"
-                            />
-                            <Field
-                                name="option4"
-                                component={this.renderOption}
-                                type="text"
-                                placeholder="option4"
-                                label="Option4"
-                            />
-                        </div>
-                        <Field
-                            name="answer"
-                            component={this.renderField}
-                            type="text"
-                            placeholder="Answer"
-                            label="Answer"
-                        />
+                <div className="internally celled grid">
+                    <div className="ui two column very relaxed stackable grid">
+                        <div className="column">
+                            <form
+                                className="ui equal width form"
+                                onSubmit={handleSubmit(this.submit)}>
+                                <Field
+                                    name="question"
+                                    component={this.renderField}
+                                    type="text"
+                                    placeholder="Question"
+                                    label="Question"
+                                />
+                                <div className="inline fields">
+                                    <Field
+                                        name="option1"
+                                        component={this.renderOption}
+                                        type="text"
+                                        placeholder="option1"
+                                        label="Option1"
+                                    />
+                                    <Field
+                                        name="option2"
+                                        component={this.renderOption}
+                                        type="text"
+                                        placeholder="option2"
+                                        label="Option2"
+                                    />
+                                    <Field
+                                        name="option3"
+                                        component={this.renderOption}
+                                        type="text"
+                                        placeholder="option3"
+                                        label="Option3"
+                                    />
+                                    <Field
+                                        name="option4"
+                                        component={this.renderOption}
+                                        type="text"
+                                        placeholder="option4"
+                                        label="Option4"
+                                    />
+                                </div>
+                                <Field
+                                    name="answer"
+                                    component={this.renderField}
+                                    type="text"
+                                    placeholder="Answer"
+                                    label="Answer"
+                                />
 
-                        <button
-                            name="submit"
-                            type="submit"
-                            className="ui button"
-                            disabled={pristine || submitting}>
-                            Submit
-                        </button>
-                        <button
-                            name="clear"
-                            className="ui button"
-                            type="button"
-                            disabled={pristine || submitting}
-                            onClick={reset}>
-                            Clear Values
-                        </button>
-                    </form>
-                    <div className="ui list">{res} </div>
+                                <button
+                                    name="submit"
+                                    type="submit"
+                                    className="ui button"
+                                    disabled={pristine || submitting}>
+                                    Submit
+                                </button>
+                                <button
+                                    name="clear"
+                                    className="ui button"
+                                    type="button"
+                                    disabled={pristine || submitting}
+                                    onClick={reset}>
+                                    Clear Values
+                                </button>
+                            </form>
+                        </div>
+                        <div className="middle aligned column">
+                            <div className="ui list">{res} </div>
+                        </div>
+                    </div>
+                    <div className="ui vertical divider" />
                 </div>
             </>
         )
     }
 }
 const mapStateToProps = state => ({
-    question: state.questAns.question,
-    answer: state.questAns.answer
+    answer: state.questAns.answer,
+    exam: state.questAns.exam
 })
 
 const mapDispatchToProps = dispatch => ({
-    addQuestion: (question, answer) => {
-        dispatch(addQuestion(question, answer))
+    addQuestion: (question, answer, option1, option2, option3, option4) => {
+        dispatch(
+            addQuestion(question, answer, option1, option2, option3, option4)
+        )
+    },
+    addExam: (index, option, answer) => {
+        dispatch(addExam(index, option, answer))
     }
 })
 

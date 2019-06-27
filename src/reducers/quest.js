@@ -1,7 +1,8 @@
-import { ADD_QSTN, ADD_ANSWER } from '../actions'
+import { ADD_QSTN, ADD_EXAM } from '../actions'
 
 const initialState = {
-    answer: []
+    answer: [],
+    exam: {}
 }
 
 const questAns = (state = initialState, action) => {
@@ -15,15 +16,26 @@ const questAns = (state = initialState, action) => {
                     ...state.answer,
                     {
                         question: action.question,
-                        answer: action.answer
+                        answer: action.answer,
+                        option1: action.option1,
+                        option2: action.option2,
+                        option3: action.option3,
+                        option4: action.option4
                     }
                 ]
             }
-        case ADD_ANSWER:
-            return [
+
+        case ADD_EXAM:
+            return {
                 ...state,
-                { id: action.id, text: action.text, completed: false }
-            ]
+                exam: {
+                    ...state.exam,
+                    [action.index]: {
+                        option: action.option,
+                        answer: action.answer
+                    }
+                }
+            }
         default:
             return state
     }
